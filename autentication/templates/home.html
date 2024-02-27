@@ -1,0 +1,180 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Meu site</title>
+    <style>
+        /* Estilos do menu */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f3f4f6
+        }
+
+        header {
+            background-color: #195c6b;
+            color: #fff;
+            padding: 10px;
+	        position: relative; /* Isso garante que o header tenha um contexto de empilhamento próprio */
+            z-index: 2; /* Isso garante que o header fique acima do nav */
+        }
+        /* Estilos do conteúdo */
+	   .menu {
+            flex: 1; /* Ocupa o espaço restante na altura da viewport */
+        }
+
+        .menu nav {
+            align: left;
+	        position: absolute;
+	        background-color: #1c869a;
+	        width: 200px;
+	        height: 100%;
+            top: 120px;
+            bottom: 0;
+            border: none;
+	        align-items: center;
+            padding: 0;
+            font: inherit;
+            cursor: pointer;
+            color: white;
+	        display: flex; /* Utilize flex para expandir o conteúdo à altura total da página */
+            flex-direction: column; /* Alinha os itens verticalmente */
+            z-index: 0;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+
+        a {
+            color: #fff;
+            text-decoration: none;
+        }
+
+        button.menu-button {
+            background-color: #1c869a;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            border-radius: 20px;
+            display: block;
+            margin: 10px;
+            text-decoration: none;
+            border: none; /* Remove as bordas dos botões */
+            cursor: pointer;
+            transition: background-color 0.3s; /* Adiciona uma transição suave para o efeito hover */
+        }
+
+        /* Quando o mouse passa sobre o botão, altera a cor de fundo */
+        button.menu-button:hover {
+            background-color: #195c6b; /* Cor mais escura */
+        }
+        .user-options p {
+	        text-align: right;
+	    }
+        .user-options input {
+	        align: right;
+            background: none;
+            border: none;
+            padding: 0;
+            font: inherit;
+            cursor: pointer;
+            color: white;
+            text-decoration: underline; 
+        }
+        .content {
+            margin-left: 220px;
+            padding: 20px;
+        }
+        .menu-button {
+            background-color: #1c869a;
+            color: white;
+            align: center;
+            padding: 10px;
+            border-radius: 20px; /* Arredonda os cantos */
+            display: block;
+            margin: 10px;
+            text-decoration: none;
+            transition: background-color 0.3s; /* Adiciona uma transição suave para o efeito hover */
+        }
+
+        /* Quando o mouse passa sobre o botão, altera a cor de fundo */
+        .menu-button:hover {
+            background-color: #195c6b; /* Cor mais escura */
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Meu Projeto Atual</h1>
+
+	   <form action="{% url 'index' %}" method="POST">{% csrf_token %}
+	      <div class="user-options">
+        	<p>
+			<input type="submit" value="Logout" name="logout"> |
+			<input type="submit" value="Trocar Senha" name="c_senha"> 
+        	</p>
+	      <div>
+
+	   </form>
+
+    </header>
+    <div class="menu">
+    <nav>
+<ul>
+    {% if "admin" == grupo or "supervisor" == grupo or "usuario" == grupo %}
+        <li>
+            <form action="{% url 'index' %}" method="post">
+                {% csrf_token %}
+                <button type="submit" name="container" value="ponto" class='menu-button'>Ponto</button>
+            </form>
+        </li>
+        <li>
+            <form action="{% url 'index' %}" method="post">
+                {% csrf_token %}
+                <button type="submit" name="container" value="ecommerce" class='menu-button'>E-Comerce</button>
+            </form>
+        </li>
+    {% endif %}
+
+    {% if "admin" == grupo or "supervisor" == grupo %}
+        <li>
+            <form action="{% url 'index' %}" method="post">
+                {% csrf_token %}
+                <button type="submit" name="container" value="produtos" class='menu-button'>Produtos</button>
+            </form>
+        </li>
+    {% endif %}
+
+    {% if "admin" == grupo %}
+        <li>
+            <form action="{% url 'index' %}" method="post">
+                {% csrf_token %}
+                <button type="submit" name="container" value="usuarios" class='menu-button'>Usuários</button>
+            </form>
+        </li>
+    {% endif %}
+</ul>
+
+    </nav>
+    </div>
+    <div class="content">
+	{%if container == '' or container is None %}
+        <h2>Bem-vindo</h2>
+        <p>Este espaço foi criado com o objetivo de estudos.</p>
+        <p>Estamos constantemente buscando aprimorar nossos serviços para melhor atender você.</p>
+	    {% endif %}
+	{%if container == 'usuarios' %}
+    <div>
+	 {% include 'usuario.html' %}
+
+    </div>
+	    {% endif %}
+    </div>
+</body>
+</html>

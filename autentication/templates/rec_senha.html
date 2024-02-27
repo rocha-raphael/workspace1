@@ -1,0 +1,35 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Trocar Senha</title>
+    <link rel="stylesheet" href="{% static 'css/estilo_senha.css' %}">
+</head>
+<body>
+    <div class="login-container">
+        <h1>Trocar Senha</h1>
+        <p style="color: red; font-size: 8px;"></p>
+        <form action="{% url 'index' %}" method="POST">
+            {% csrf_token %}
+            <div class="user-icon">
+                <i class="fas fa-user"></i>
+                <input type="text" placeholder="Usuário" value="{{ usuario_logado }}" name="usuario" readonly>
+            </div>
+            <div class="password-icon">
+                <i class="fas fa-lock"></i>
+                <input type="password" placeholder="Nova Senha" name="nova_senha">
+            </div>
+            <div class="password-icon">
+                <i class="fas fa-lock"></i>
+                <input type="password" placeholder="Confirme a Nova Senha" name="confirma_nova_senha">
+
+            </div>
+		{{ erro_msg }}
+		<br>
+            <input type="submit" name="new_pass" value="Trocar Senha">
+        </form>
+    </div>
+</body>
+</html>

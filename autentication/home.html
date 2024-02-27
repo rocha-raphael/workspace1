@@ -1,0 +1,89 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+    <style>
+        /* Estilos do menu */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f3f4f6
+        }
+
+        header {
+            background-color: #195c6b;
+            color: #fff;
+            padding: 10px;
+        }
+
+        nav {
+            width: 200px;
+            background-color: #1c869a;
+            height: 100%;
+            position: fixed;
+            padding-top: 50px;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+
+        a {
+            color: #fff;
+            text-decoration: none;
+        }
+
+        /* Estilos do conteúdo */
+        .content {
+            margin-left: 220px;
+            padding: 20px;
+        }
+        .menu-button {
+            background-color: #1c869a;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            border-radius: 20px; /* Arredonda os cantos */
+            display: block;
+            margin: 10px;
+            text-decoration: none;
+            transition: background-color 0.3s; /* Adiciona uma transição suave para o efeito hover */
+        }
+
+        /* Quando o mouse passa sobre o botão, altera a cor de fundo */
+        .menu-button:hover {
+            background-color: #195c6b; /* Cor mais escura */
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Relatórios Teltex</h1>
+
+        <p style="text-align: right;"><a href="{% url 'logout' %}">Logout</a> | <a href="{% url 'trocar_senha' %}">Trocar Senha</a></p>
+
+    </header>
+    <nav>
+    <div class="menu">
+        <ul>
+            <!--{% if "ALGUMA_COISA" in menus %} -->
+            <!--<li><a href="{% url 'relatorio_copasa' %}" class='menu-button'>Relatório de Disponibilidade</a></li> -->
+            <!--{% endif %} -->
+
+
+        </ul>
+    </div>
+    </nav>
+    <div class="content">
+        <h2>Bem-vindo</h2>
+        <p>Este espaço foi criado com o objetivo de facilitar o acesso aos relatórios e proporcionar uma experiência de visualização mais eficiente.</p>
+        <p>Estamos constantemente buscando aprimorar nossos serviços para melhor atender você.</p>
+    </div>
+</body>
+</html>

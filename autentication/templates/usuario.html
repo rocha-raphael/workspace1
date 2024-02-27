@@ -1,0 +1,180 @@
+
+    <style>
+
+        .user-container {
+            width: 300px;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+	    position: absolute;
+            top: 70%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .user-buttons {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 10px;
+        }
+
+        .user-button {
+            margin-left: 10px;
+            padding: 8px 12px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #editar-btn {
+            background-color: #3498db;
+            color: white;
+        }
+
+        #adicionar-btn {
+            background-color: #27ae60;
+            color: white;
+        }
+
+        .user-container input {
+            width: 100%;
+            margin-bottom: 10px;
+            padding: 8px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .user-container select {
+            width: 100%;
+            margin-bottom: 10px;
+            padding: 8px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .side-panel {
+            right: 0;
+            height: 100%;
+            width: 200px;
+            background-color: #f5f5f5;
+	    padding: 10% 20px 20px 20px;
+            box-shadow: -5px 0 5px rgba(0, 0, 0, 0.1);
+	    position: absolute;
+            top: 0;
+	    display: flex; /* Utilize flex para expandir o conteúdo à altura total da página */
+            flex-direction: column; /* Alinha os itens verticalmente */
+            z-index: 0;
+        }
+    
+        .nomes-list {
+            list-style-type: none;
+            padding: 0;
+        }
+    
+        .nomes-list input {
+            background: none;
+            border: none;
+            padding: 0;
+            font: inherit;
+            cursor: pointer;
+            color: black;
+            text-decoration: underline;
+        }
+        .nomes-list-item {
+            margin-bottom: 10px;
+        }
+	.user-edit-container {
+	    text-align: center; /* Centraliza o conteúdo da div */
+	    margin-bottom: 20px; /* Espaçamento abaixo do texto */
+	    display: flex;
+	    justify-content: center; /* Centraliza os botões horizontalmente */
+	    gap: 10px; /* Espaçamento entre os botões */
+	}
+    </style>
+
+	<br>
+
+	{{ erro_msg }}
+	<br>
+<div class="user-container">
+    <form action="{% url 'usuarios' %}" method="POST">{% csrf_token %}
+    <div class="user-buttons">
+
+                    {% if usuario_alvo == 'editar' %}
+        <button id="adicionar-btn" name="adicionar" value="adicionar"  class="user-button">Adicionar <span style="font-weight: bold;">+</span></button>
+                    {% elif usuario_alvo == 'adicionar' %}
+		    Adicionar novo  usuário.
+		    <br>
+        <button id="editar-btn" class="user-button">Editar Atual</button>
+                    {% elif usuario_alvo == 'editar_outro' %}
+		    <div class="user-edit-container">
+		    Editar usuário {{ usuarios_editar }}
+        <button id="editar-btn" class="user-button">Editar Atual</button>
+        <button id="adicionar-btn" name="adicionar" value="adicionar"  class="user-button">Adicionar <span style="font-weight: bold;">+</span></button>
+		    </div>
+                    {% endif %}
+
+    </div>
+    </form>
+
+    <form action="{% url 'usuarios' %}" method="POST">{% csrf_token %}
+        <label for="login">Login:</label>
+	{% if usuario_alvo == 'editar' or usuario_alvo == 'editar_outro' %}
+
+        <input type="text" id="login" name="login" value="{{ nome_usuario }}" readonly>
+	{% else %}
+
+	<input type="text" id="login" name="login" value="{{ nome_usuario }}" required>
+	{% endif %}
+
+        <label for="nome">Nome Completo:</label>
+        <input type="text" id="nome" name="nome"  value="{{ nome_completo }}" required>
+
+	<label for="grupo">Grupo:</label>
+        <select id="grupo" name="grupo" required>
+            {% for g in todos_grupos %}
+                <option value="{{ g }}" {% if g == grupo_primario %}selected{% endif %}>{{ g }}</option>
+		 
+            {% endfor %}
+        </select>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email"   value="{{ email }}" required>
+
+        <label for="senha">Senha:</label>
+	{% if usuario_alvo == 'editar' or  usuario_alvo == 'editar_outro'  %}
+        <input type="password" id="senha" name="senha" value="0000000000" required>
+	{% else %}
+        <input type="password" id="senha" name="senha"  required>
+        {% endif %}
+
+		    {% if usuario_alvo == 'editar' %}
+		<button id="acao-btn" class="user-button" name="acao_botao_usuarios" value="editar_atual">
+		        Editar usuário atual 
+		    {% elif usuario_alvo == 'adicionar' %}
+		<button id="acao-btn" class="user-button" name="acao_botao_usuarios" value="adicionar">
+		        Adicionar
+		    {% elif usuario_alvo == 'editar_outro' %}
+		<button id="acao-btn" class="user-button" name="acao_botao_usuarios" value="editar_outro">
+		        Editar 
+		<button id="acao-btn" class="user-button" name="excluir_usuario" value="excluir">
+		        Excluir 
+		    {% endif %}
+		</button>
+    </form>
+</div>
+
+
+<div class="side-panel">
+    <h3>Usuarios</h3>
+    <ul class="nomes-list">
+        {% for nome in nomes %}
+	<form action="{% url 'usuarios' %}" method="POST">{% csrf_token %}
+	    <li class="nomes-list-item">
+		    <input type="submit" class="submit-button hidden-submit" value="{{ nome }}"  name="nome_editar" id="{{ nome }}">
+            </li>
+	</form>
+        {% endfor %}
+    </ul>
+</div>

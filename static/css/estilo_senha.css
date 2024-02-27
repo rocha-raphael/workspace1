@@ -1,0 +1,68 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f2f2f2;
+}
+
+
+.cadastro-container {
+  width: 400px;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  margin: 100px auto;
+  padding: 30px;
+}
+
+.login-container {
+  width: 400px;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  margin: 100px auto;
+  padding: 30px;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.user-icon, .password-icon {
+  position: relative;
+  margin-bottom: 30px;
+}
+
+.user-icon i, .password-icon i {
+  position: absolute;
+  left: 10px;
+  top: 10px;
+  color: gray;
+}
+
+input[type="text"], input[type="password"] {
+  width: 100%;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+input[type="submit"] {
+  width: 100%;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: #1c869a;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+input[type="submit"]:hover {
+  background-color: #02768d;
